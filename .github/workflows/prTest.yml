@@ -2,7 +2,7 @@ name: Run gradlew clean test when PR
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "production" ]
 
 jobs:
   PRTest:
@@ -19,23 +19,21 @@ jobs:
 
       - name: make application.yml
         run: |
-          mkdir -p ./src/main/resources
-          cd ./src/main/resources
-          touch ./application.yml
-          touch ./application-common.yml
-          touch ./application-prod.yml
-          echo "${{ secrets.APPLICATION }}" > ./application.yml
-          echo "${{ secrets.COMMON }}" > ./application-common.yml
-          echo "${{ secrets.PROD }}" > ./application-prod.yml
+          mkdir -p src/main/resources
+          cp HERE-WE-SECRET/main/resources/application.yml src/main/resources/
+          cp HERE-WE-SECRET/main/resources/application-dev.yml src/main/resources/
+          cp HERE-WE-SECRET/main/resources/application-prod.yml src/main/resources/
+          cp HERE-WE-SECRET/main/resources/application-common.yml src/main/resources/
+          
+          mkdir -p src/test/resources
+          cp HERE-WE-SECRET/test/resources/application.yml src/test/resources/
+          cp HERE-WE-SECRET/test/resources/application-test.yml src/test/resources/
+          
+          echo "Main resources contents:"
+          ls -la src/main/resources/
+          echo "Test resources contents:"
+          ls -la src/test/resources/
 
-      - name: make test application.yml
-        run: |
-          mkdir -p ./src/test/resources
-          cd ./src/test/resources
-          touch ./application.yml
-          touch ./application-test.yml
-          echo "${{ secrets.APPLICATION_TEST }}" > ./application.yml
-          echo "${{ secrets.TEST }}" > ./application-test.yml
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
