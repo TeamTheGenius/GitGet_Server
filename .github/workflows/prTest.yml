@@ -20,14 +20,13 @@ jobs:
       - name: make application.yml
         run: |
           mkdir -p src/main/resources
-          cp HERE-WE-SECRET/main/resources/application.yml src/main/resources/
-          cp HERE-WE-SECRET/main/resources/application-dev.yml src/main/resources/
-          cp HERE-WE-SECRET/main/resources/application-prod.yml src/main/resources/
-          cp HERE-WE-SECRET/main/resources/application-common.yml src/main/resources/
+          cp GitGet-BACK-SECRET/main/resources/application.yml src/main/resources/
+          cp GitGet-BACK-SECRET/main/resources/application-prod.yml src/main/resources/
+          cp GitGet-BACK-SECRET/main/resources/application-common.yml src/main/resources/
           
           mkdir -p src/test/resources
-          cp HERE-WE-SECRET/test/resources/application.yml src/test/resources/
-          cp HERE-WE-SECRET/test/resources/application-test.yml src/test/resources/
+          cp GitGet-BACK-SECRET/test/resources/application.yml src/test/resources/
+          cp HGitGet-BACK-SECRET/test/resources/application-test.yml src/test/resources/
           
           echo "Main resources contents:"
           ls -la src/main/resources/
