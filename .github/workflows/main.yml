@@ -8,8 +8,8 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
-  AWS_S3_BUCKET: gitget-deploy-bucket
-  AWS_CODE_DEPLOY_APPLICATION: GitGet-Application-CD
+  AWS_S3_BUCKET: gitget-deploy-bucket2
+  AWS_CODE_DEPLOY_APPLICATION: GitGet-Application
   AWS_CODE_DEPLOY_GROUP: GitGet-Deployment-Group
 
 jobs:
