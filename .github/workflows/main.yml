@@ -24,8 +24,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          token: ${{ secrets.ACTIONS_TOKEN }}
+          submodules: true
 
       - name: make application.yml
         run: |
