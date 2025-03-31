@@ -1,0 +1,47 @@
+name: Run gradlew clean test when PR
+
+on:
+  pull_request:
+    branches: [ "main", "production" ]
+
+jobs:
+  PRTest:
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.ACTIONS_TOKEN }}
+          submodules: true
+
+      - name: make application.yml
+        run: |
+          mkdir -p src/main/resources
+          cp GitGet-BACK-SECRET/main/resources/application.yml src/main/resources/
+          cp GitGet-BACK-SECRET/main/resources/application-prod.yml src/main/resources/
+          cp GitGet-BACK-SECRET/main/resources/application-common.yml src/main/resources/
+
+          mkdir -p src/test/resources
+          cp GitGet-BACK-SECRET/test/resources/application.yml src/test/resources/
+          cp GitGet-BACK-SECRET/test/resources/application-test.yml src/test/resources/
+
+          echo "Main resources contents:"
+          ls -la src/main/resources/
+          echo "Test resources contents:"
+          ls -la src/test/resources/
+          
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+        shell: bash
+
+      - name: Build and Test
+        run: ./gradlew clean test
+
+      # Test 후 Report 생성
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          junit_files: '**/build/test-results/test/TEST-*.xml'
